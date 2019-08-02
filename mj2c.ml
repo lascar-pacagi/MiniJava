@@ -417,8 +417,8 @@ let expr2c
     | EArrayAlloc e ->
        fprintf out "(void*)({ int %s = %a; \
                     if (%s < 0) exit(1); \
-                    struct %s* res = malloc(sizeof(struct %s)); \
-                    res->array = (int*) calloc(%s, sizeof(int)); \
+                    struct %s* res = tgc_alloc(({ extern tgc_t gc; &gc; }), sizeof(struct %s)); \
+                    res->array = (int*) tgc_calloc(({ extern tgc_t gc; &gc; }), %s, sizeof(int)); \
                     res->length = %s; res; })"
          !name1
          expr2c e
@@ -429,7 +429,7 @@ let expr2c
          !name1
 
     | EObjectAlloc id ->
-       fprintf out "({ struct %s* res = calloc(1, sizeof(*res)); \
+       fprintf out "({ struct %s* res = tgc_calloc(({ extern tgc_t gc; &gc; }), 1, sizeof(*res)); \
                     res->vtable = %s_vtable; \
                     res; })"
          id
@@ -647,9 +647,11 @@ let program2c out (p : MJ.program) : unit =
   fprintf out
     "#include <stdio.h>\n\
      #include <stdlib.h>\n\
+     #include \"tgc.h\"\n\
      #pragma GCC diagnostic ignored \"-Wpointer-to-int-cast\"\n\
      #pragma GCC diagnostic ignored \"-Wint-to-pointer-cast\"\n\
      struct %s { int* array; int length; };\n\
+     tgc_t gc;\n\
      %a\
      %a\
      %a\
@@ -657,6 +659,8 @@ let program2c out (p : MJ.program) : unit =
      %a\
      int main(int argc, char *argv[]) {\
      %a\
+     %a\
+     %a\n\
      %a\n\
      }\n"
     !struct_array_name
@@ -676,7 +680,11 @@ let program2c out (p : MJ.program) : unit =
     (term_list nl method_definition2c)
     (List.filter (fun (_, c) -> c.methods <> []) p.defs)
 
+    (indent indentation print_string) "tgc_start(&gc, &argc);"
+
     (indent indentation (instr2c "main" (get_class_info p.name)))
     p.main
+
+    (indent indentation print_string) "tgc_stop(&gc);"
 
     (indent indentation print_string) "return 0;"

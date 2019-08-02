@@ -4,6 +4,7 @@ set -o nounset
 set -o pipefail
 #set -o xtrace
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 MINIJAVA=${PWD}/../mini-java
 BUILD_DIR=
 BAD_PARSING_DIR=${PWD}/bad_syntax
@@ -138,7 +139,7 @@ function test_typechecking() {
 }
 
 function diff_runtime() {
-    diff <(${MINIJAVA} ${1} && gcc ${1/java/c} && ./a.out) <(javac ${1} && java ${1/.java/})
+    diff <(${MINIJAVA} --tgc-path=${SCRIPT_DIR}/../tgc ${1} && ./${1/.java/}) <(javac ${1} && java ${1/.java/})
 }
 
 function test_runtime() {

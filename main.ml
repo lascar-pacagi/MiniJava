@@ -8,6 +8,8 @@ let show_ast = ref false
 let show_ast_with_loc = ref false
 let stop_at_typechecking = ref false
 let stop_at_parsing = ref false
+let tgc_path = ref "tgc"
+let cc = ref "cc"
 
 let set_file f s = f := s
 
@@ -25,6 +27,10 @@ let options =
      " parse the program and stop";
    "--stop-at-typechecking", Arg.Set stop_at_typechecking,
      " typecheck the program and stop";
+   "--tgc-path", Arg.Set_string tgc_path,
+     " path to tgc; default is ./tgc";
+   "--c-compiler", Arg.Set_string cc,
+     " c compiler; default is cc"
   ]
 
 let () =
@@ -96,7 +102,12 @@ let () =
     Printf.fprintf output "*/\n";
     Mj2c.program2c output mj;
     close_out output;
-    exit 0
+    match
+      Unix.system(Printf.sprintf "%s %s -o %s -I%s %s/tgc.o"
+                    !cc !ofile (Filename.chop_extension !ifile) !tgc_path !tgc_path)
+    with
+    | Unix.WEXITED code -> exit code
+    | _ -> exit 1
   with
     | Lexer.Error msg ->
         Printf.fprintf stderr "Lexical error %s:\n%s.\n" (Error.position (Lexing.lexeme_start_p lexbuf)) msg;
