@@ -1,0 +1,366 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Mj2c.html">
+<link rel="next" href="Parser.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Lmj2mj" rel="Chapter" href="Lmj2mj.html">
+<link title="LMJ" rel="Chapter" href="LMJ.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Mj2c" rel="Chapter" href="Mj2c.html">
+<link title="MJ" rel="Chapter" href="MJ.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Print_ast" rel="Chapter" href="Print_ast.html">
+<link title="PrintMJ" rel="Chapter" href="PrintMJ.html">
+<link title="Print" rel="Chapter" href="Print.html">
+<link title="Print_tokens" rel="Chapter" href="Print_tokens.html">
+<link title="StringMap" rel="Chapter" href="StringMap.html">
+<link title="StringSet" rel="Chapter" href="StringSet.html">
+<link title="Typechecking" rel="Chapter" href="Typechecking.html"><title>MJ</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Mj2c.html" title="Mj2c">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Parser.html" title="Parser">Next</a>
+</div>
+<h1>Module <a href="type_MJ.html">MJ</a></h1>
+
+<pre><span id="MODULEMJ"><span class="keyword">module</span> MJ</span>: <code class="code">sig</code> <a href="MJ.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>This is the same abstract syntax tree as in <code class="code">LMJ.mli</code> but without position informations.
+    After typechecking, we don't need to give feedbacks to the user.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEidentifier"><span class="keyword">type</span> <code class="type"></code>identifier</span> = <code class="type">string</code> </pre>
+
+
+<pre><code><span id="TYPEexpression"><span class="keyword">type</span> <code class="type"></code>expression</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EConst"><span class="constructor">EConst</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEconstant">constant</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EGetVar"><span class="constructor">EGetVar</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EUnOp"><span class="constructor">EUnOp</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEunop">unop</a> * <a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EBinOp"><span class="constructor">EBinOp</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEbinop">binop</a> * <a href="MJ.html#TYPEexpression">expression</a> * <a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EMethodCall"><span class="constructor">EMethodCall</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a> * <a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEexpression">expression</a> list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EArrayGet"><span class="constructor">EArrayGet</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a> * <a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EArrayAlloc"><span class="constructor">EArrayAlloc</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EArrayLength"><span class="constructor">EArrayLength</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EThis"><span class="constructor">EThis</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTexpression.EObjectAlloc"><span class="constructor">EObjectAlloc</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a></code></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="TYPEconstant"><span class="keyword">type</span> <code class="type"></code>constant</span> = <code class="type"><a href="LMJ.html#TYPEconstant">LMJ.constant</a></code> = </pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTconstant.ConstBool"><span class="constructor">ConstBool</span></span> <span class="keyword">of</span> <code class="type">bool</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTconstant.ConstInt"><span class="constructor">ConstInt</span></span> <span class="keyword">of</span> <code class="type">int32</code></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="TYPEbinop"><span class="keyword">type</span> <code class="type"></code>binop</span> = <code class="type"><a href="LMJ.html#TYPEbinop">LMJ.binop</a></code> = </pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbinop.OpAdd"><span class="constructor">OpAdd</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbinop.OpSub"><span class="constructor">OpSub</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbinop.OpMul"><span class="constructor">OpMul</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbinop.OpLt"><span class="constructor">OpLt</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbinop.OpAnd"><span class="constructor">OpAnd</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="TYPEunop"><span class="keyword">type</span> <code class="type"></code>unop</span> = <code class="type"><a href="LMJ.html#TYPEunop">LMJ.unop</a></code> = </pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTunop.UOpNot"><span class="constructor">UOpNot</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><code><span id="TYPEinstruction"><span class="keyword">type</span> <code class="type"></code>instruction</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTinstruction.IBlock"><span class="constructor">IBlock</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEinstruction">instruction</a> list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTinstruction.IIf"><span class="constructor">IIf</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a> * <a href="MJ.html#TYPEinstruction">instruction</a> * <a href="MJ.html#TYPEinstruction">instruction</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTinstruction.IWhile"><span class="constructor">IWhile</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a> * <a href="MJ.html#TYPEinstruction">instruction</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTinstruction.ISyso"><span class="constructor">ISyso</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTinstruction.ISetVar"><span class="constructor">ISetVar</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTinstruction.IArraySet"><span class="constructor">IArraySet</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEexpression">expression</a> * <a href="MJ.html#TYPEexpression">expression</a></code></code></td>
+
+</tr></table>
+
+
+
+<pre><code><span id="TYPEtyp"><span class="keyword">type</span> <code class="type"></code>typ</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtyp.TypInt"><span class="constructor">TypInt</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtyp.TypBool"><span class="constructor">TypBool</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtyp.TypIntArray"><span class="constructor">TypIntArray</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtyp.Typ"><span class="constructor">Typ</span></span> <span class="keyword">of</span> <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a></code></code></td>
+
+</tr></table>
+
+
+
+<pre><code><span id="TYPEmetho"><span class="keyword">type</span> <code class="type"></code>metho</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetho.formals">formals</span>&nbsp;: <code class="type">(<a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEtyp">typ</a>) list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetho.result">result</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEtyp">typ</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetho.locals">locals</span>&nbsp;: <code class="type">(<a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEtyp">typ</a>) list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetho.body">body</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEinstruction">instruction</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetho.return">return</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEexpression">expression</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEclas"><span class="keyword">type</span> <code class="type"></code>clas</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTclas.extends">extends</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTclas.attributes">attributes</span>&nbsp;: <code class="type">(<a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEtyp">typ</a>) list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTclas.methods">methods</span>&nbsp;: <code class="type">(<a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEmetho">metho</a>) list</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEprogram"><span class="keyword">type</span> <code class="type"></code>program</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTprogram.name">name</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTprogram.defs">defs</span>&nbsp;: <code class="type">(<a href="MJ.html#TYPEidentifier">identifier</a> * <a href="MJ.html#TYPEclas">clas</a>) list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTprogram.main_args">main_args</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEidentifier">identifier</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTprogram.main">main</span>&nbsp;: <code class="type"><a href="MJ.html#TYPEinstruction">instruction</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+</body></html>

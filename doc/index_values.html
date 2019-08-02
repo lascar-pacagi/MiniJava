@@ -1,0 +1,210 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Lmj2mj" rel="Chapter" href="Lmj2mj.html">
+<link title="LMJ" rel="Chapter" href="LMJ.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Mj2c" rel="Chapter" href="Mj2c.html">
+<link title="MJ" rel="Chapter" href="MJ.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Print_ast" rel="Chapter" href="Print_ast.html">
+<link title="PrintMJ" rel="Chapter" href="PrintMJ.html">
+<link title="Print" rel="Chapter" href="Print.html">
+<link title="Print_tokens" rel="Chapter" href="Print_tokens.html">
+<link title="StringMap" rel="Chapter" href="StringMap.html">
+<link title="StringSet" rel="Chapter" href="StringSet.html">
+<link title="Typechecking" rel="Chapter" href="Typechecking.html"><title>Index of values</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Index of values</h1>
+<table>
+<tr><td align="left"><div>A</div></td></tr>
+<tr><td><a href="StringMap.html#VALaddm">addm</a> [<a href="StringMap.html">StringMap</a>]</td>
+<td><div class="info">
+<p><code class="code">addm m1 m2</code> adds the bindings in the map <code class="code">m1</code> to the map <code class="code">m2</code>,
+   overriding any previous binding if <code class="code">m1</code> and <code class="code">m2</code> have common keys.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>C</div></td></tr>
+<tr><td><a href="Print.html#VALcomma">comma</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">comma out</code> prints a comma on the output channel <code class="code">out</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Location.html#VALcontent">content</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+<p><code class="code">content loc</code> gets the content of location <code class="code">loc</code>.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>D</div></td></tr>
+<tr><td><a href="StringMap.html#VALdomain">domain</a> [<a href="StringMap.html">StringMap</a>]</td>
+<td><div class="info">
+<p><code class="code">domain m</code> is the domain of the map <code class="code">m</code>, that is, the set of keys
+   that are defined.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>E</div></td></tr>
+<tr><td><a href="Location.html#VALendpos">endpos</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+<p><code class="code">endpos loc</code> gets the ending position of location <code class="code">loc</code>.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>I</div></td></tr>
+<tr><td><a href="Print.html#VALindent">indent</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">indent offset producer out x</code> prints on the output channel <code class="code">out</code>
+    the object <code class="code">x</code> using <code class="code">producer</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print.html#VALindent_t">indent_t</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">indent_t offset producer out</code> prints on the output channel <code class="code">out</code>
+    using <code class="code">producer</code>.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>L</div></td></tr>
+<tr><td><a href="Print.html#VALlist">list</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">list elem out xs</code> prints on the output channel <code class="code">out</code> the list <code class="code">xs</code>
+    using <code class="code">elem</code> to print each element.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>M</div></td></tr>
+<tr><td><a href="Location.html#VALmake">make</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+<p><code class="code">make startpos endpos content</code> create a location from a starting position <code class="code">startpos</code>
+    and an ending position <code class="code">endpos</code> obtained from the lexbuf and a <code class="code">content</code> (an identifier or an expression in our case).</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>N</div></td></tr>
+<tr><td><a href="Print.html#VALnl">nl</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">nl out</code> prints on the output channel <code class="code">out</code> a newline and then
+    the current level of indentation.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>O</div></td></tr>
+<tr><td><a href="StringMap.html#VALof_association_list">of_association_list</a> [<a href="StringMap.html">StringMap</a>]</td>
+<td></td></tr>
+<tr><td align="left"><div>P</div></td></tr>
+<tr><td><a href="Error.html#VALposition">position</a> [<a href="Error.html">Error</a>]</td>
+<td><div class="info">
+<p><code class="code">position pos</code> returns a string from a position <code class="code">pos</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Error.html#VALpositions">positions</a> [<a href="Error.html">Error</a>]</td>
+<td><div class="info">
+<p><code class="code">position pos1 pos2</code> returns a string from two positions <code class="code">pos1</code> and <code class="code">pos2</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print.html#VALprec_list">prec_list</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">prec_list delim elem out xs</code> prints on the output channel <code class="code">out</code>
+    the list <code class="code">xs</code> using <code class="code">elem</code> to print each element.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print_tokens.html#VALprint">print</a> [<a href="Print_tokens.html">Print_tokens</a>]</td>
+<td><div class="info">
+<p><code class="code">print out lexbuf show_loc</code> prints the tokens obtained from <code class="code">lexbuf</code> on the <code class="code">out</code> channel.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print_ast.html#VALprint">print</a> [<a href="Print_ast.html">Print_ast</a>]</td>
+<td><div class="info">
+<p><code class="code">print out prog show_loc</code> prints the abstract syntax tree <code class="code">prog</code> on the <code class="code">out</code> channel.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="PrintMJ.html#VALprint_program">print_program</a> [<a href="PrintMJ.html">PrintMJ</a>]</td>
+<td><div class="info">
+<p><code class="code">print_program out prog</code> transforms the abstract syntax tree <code class="code">prog</code> back into Java and write the result on the <code class="code">out</code> channel.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print.html#VALprint_string">print_string</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">print_string out s</code> prints the string <code class="code">s</code> on the output channel <code class="code">out</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Parser.html#VALprogram">program</a> [<a href="Parser.html">Parser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Mj2c.html#VALprogram2c">program2c</a> [<a href="Mj2c.html">Mj2c</a>]</td>
+<td><div class="info">
+<p><code class="code">program2c out prog</code> transpiles the abstract syntax tree <code class="code">prog</code> of the MiniJava program
+    to C and prints it on the <code class="code">out</code> channel.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>S</div></td></tr>
+<tr><td><a href="Print.html#VALsemicolon">semicolon</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">semicolon out</code> prints a semicolon on the output channel <code class="code">out</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print.html#VALsep_list">sep_list</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">sep_list delim elem out xs</code> prints on the output channel <code class="code">out</code>
+    the list <code class="code">xs</code> using <code class="code">elem</code> to print each element.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Print.html#VALspace">space</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">space out</code> prints a whitespace on the output channel <code class="code">out</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Location.html#VALstartpos">startpos</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+<p><code class="code">startpos loc</code> gets the starting position of location <code class="code">loc</code>.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>T</div></td></tr>
+<tr><td><a href="Print.html#VALterm_list">term_list</a> [<a href="Print.html">Print</a>]</td>
+<td><div class="info">
+<p><code class="code">term_list delim elem out xs</code> prints on the output channel <code class="code">out</code>
+    the list <code class="code">xs</code> using <code class="code">elem</code> to print each element.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Lmj2mj.html#VALtranslate_program">translate_program</a> [<a href="Lmj2mj.html">Lmj2mj</a>]</td>
+<td><div class="info">
+<p><code class="code">translate_program p</code> gets rid of position informations in <code class="code">p</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Typechecking.html#VALtypecheck_program">typecheck_program</a> [<a href="Typechecking.html">Typechecking</a>]</td>
+<td><div class="info">
+<p><code class="code">typecheck_program prog</code> typechecks the abstract syntax tree <code class="code">prog</code> and raises an <code class="code">Error</code> exception if something is wrong.</p>
+
+</div>
+</td></tr>
+</table>
+</body>
+</html>

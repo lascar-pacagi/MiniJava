@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Print_tokens.html">
+<link rel="next" href="StringSet.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Lmj2mj" rel="Chapter" href="Lmj2mj.html">
+<link title="LMJ" rel="Chapter" href="LMJ.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Mj2c" rel="Chapter" href="Mj2c.html">
+<link title="MJ" rel="Chapter" href="MJ.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Print_ast" rel="Chapter" href="Print_ast.html">
+<link title="PrintMJ" rel="Chapter" href="PrintMJ.html">
+<link title="Print" rel="Chapter" href="Print.html">
+<link title="Print_tokens" rel="Chapter" href="Print_tokens.html">
+<link title="StringMap" rel="Chapter" href="StringMap.html">
+<link title="StringSet" rel="Chapter" href="StringSet.html">
+<link title="Typechecking" rel="Chapter" href="Typechecking.html"><title>StringMap</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Print_tokens.html" title="Print_tokens">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="StringSet.html" title="StringSet">Next</a>
+</div>
+<h1>Module <a href="type_StringMap.html">StringMap</a></h1>
+
+<pre><span id="MODULEStringMap"><span class="keyword">module</span> StringMap</span>: <code class="code">sig</code> <a href="StringMap.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p>A map where keys are strings. Consult <code class="code">Map.S</code> in Objective Caml's documentation.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span class="keyword">include</span> Map.S</pre>
+
+<pre><span id="VALaddm"><span class="keyword">val</span> addm</span> : <code class="type">'a t -> 'a t -> 'a t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">addm m1 m2</code> adds the bindings in the map <code class="code">m1</code> to the map <code class="code">m2</code>,
+   overriding any previous binding if <code class="code">m1</code> and <code class="code">m2</code> have common keys.</p>
+</div>
+</div>
+
+<pre><span id="EXCEPTIONDuplicate"><span class="keyword">exception</span> Duplicate</span> <span class="keyword">of</span> <code class="type">key</code></pre>
+<div class="info ">
+<div class="info-desc">
+<p><code class="code">of_association_list l</code> turns an association list into a map.
+   It raises <code class="code">Duplicate key</code> if a key appears twice in the list.
+   <code class="code">to_association_list m</code> turns a map into an association list.</p>
+</div>
+</div>
+
+<pre><span id="VALof_association_list"><span class="keyword">val</span> of_association_list</span> : <code class="type">(key * 'a) list -> 'a t</code></pre>
+<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">'a t -> StringSet.t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">domain m</code> is the domain of the map <code class="code">m</code>, that is, the set of keys
+   that are defined.</p>
+</div>
+</div>
+</body></html>
