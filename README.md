@@ -33,7 +33,7 @@ opam install -y menhir
 Once you have the dependencies (see above), run the following commands in your terminal.
 
 ```bash
-git clone --recurse-submodules git@github.com:lascar-pacagi/MiniJava.git
+git clone --recurse-submodules https://github.com/lascar-pacagi/MiniJava.git
 make
 ./mini-java file.java
 ./file
