@@ -15,6 +15,8 @@ eval `opam config env`
 opam switch -y 4.07.0
 eval `opam config env`
 opam install -y menhir
+opam install -y ocamlbuild
+opam install -y ocamlfind
 ```
 
 #### Mac OS X
@@ -26,6 +28,8 @@ eval `opam config env`
 opam switch -y 4.07.0
 eval `opam config env`
 opam install -y menhir
+opam install -y ocamlbuild
+opam install -y ocamlfind
 ```
 
 ### Download, Compile and Run

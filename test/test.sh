@@ -4,12 +4,12 @@ set -o nounset
 set -o pipefail
 #set -o xtrace
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-MINIJAVA=${PWD}/../mini-java
+SCRIPT_DIR="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+MINIJAVA=${SCRIPT_DIR}/../mini-java
 BUILD_DIR=
-BAD_PARSING_DIR=${PWD}/bad_syntax
-BAD_TYPECHECKING_DIR=${PWD}/bad_typechecking
-GOOD_DIR=${PWD}/good
+BAD_PARSING_DIR=${SCRIPT_DIR}/bad_syntax
+BAD_TYPECHECKING_DIR=${SCRIPT_DIR}/bad_typechecking
+GOOD_DIR=${SCRIPT_DIR}/good
 COLOR_BLACK=0
 COLOR_RED=1
 COLOR_GREEN=2
@@ -34,11 +34,11 @@ ARGUMENTS:
 -r - test runtime only
 -a - test all
 -b - path to directory containing the programs that contain lexical and syntax errors
-     by default they are searched in ${PWD}/bad_parsing
+     by default they are searched in ${SCRIPT_DIR}/bad_parsing
 -d - path to directory containing the programs that contain semantic errors
-     by default they are searched in ${PWD}/bad_typechecking
+     by default they are searched in ${SCRIPT_DIR}/bad_typechecking
 -g - path to directory containing the good programs (compile and run correctly)
-     by default they are searched in ${PWD}/good
+     by default they are searched in ${SCRIPT_DIR}/good
 -h - show help
 END
 }
