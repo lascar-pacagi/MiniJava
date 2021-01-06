@@ -61,7 +61,6 @@ and clas = {
   extends: identifier option; (** The parent class if any. *)
   attributes: (identifier * typ) list; (** The names of the attributes of the class with their types. *)
   methods: (identifier * metho) list (** The names of the methods of the class with their types. *)
-
 }
 
 and program = {

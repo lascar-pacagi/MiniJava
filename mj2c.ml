@@ -302,6 +302,7 @@ let constant2c
       out
       (c : MJ.constant)
     : unit =
+
   match c with
   | ConstBool true  -> fprintf out "1"
   | ConstBool false -> fprintf out "0"
