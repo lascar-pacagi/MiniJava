@@ -16,7 +16,7 @@
 
 let digit = ['0'-'9']
 let integer = digit+
-let space = [' ' '\t']
+let space = [' ' '\t' '\r']
 let letter = ['a'-'z''A'-'Z''_']
 let ident = letter (digit | letter)*
 
