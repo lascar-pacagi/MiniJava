@@ -1,6 +1,6 @@
 open Printf
 open Print
-open MJ
+open TMJ
 
 (** [struct_array_name] is the name of the structure that holds an array and its length:
     class array {
@@ -29,8 +29,8 @@ let indentation = 2
     and [c = List.assoc "C" defs]
     then [fold_class_hierarchy f defs (Some "C") acc] is [f "C" c (f "B" b (f "A" a acc))]. *)
 let rec fold_class_hierarchy
-          (f : string -> MJ.clas -> 'a -> 'a)
-          (defs : (MJ.identifier * MJ.clas) list)
+          (f : string -> TMJ.clas -> 'a -> 'a)
+          (defs : (TMJ.identifier * TMJ.clas) list)
           (parent : string option)
           (acc : 'a)
         : 'a =
@@ -49,7 +49,7 @@ module type ClassInfoType = sig
   type t
   (** [create name c defs] creates a [ClassInfoType.t] from the [name] of a class,
       the class [c] and all class definitions [defs]. *)
-  val create : string -> MJ.clas -> (identifier * clas) list -> t
+  val create : string -> TMJ.clas -> (identifier * clas) list -> t
 
   (** [class_name class_info] returns the name of the class of this [class_info]. *)
   val class_name : t -> string
@@ -57,10 +57,6 @@ module type ClassInfoType = sig
   (** [is_attribute m v class_info] checks if the variable [v] in the context of
      method [m] is an attribute of the [class_info] or not (if not it is a parameter or a local variable). *)
   val is_attribute : string -> string -> t -> bool
-
-  (** [class_of m v class_info] returns the class name of variable [v] in the context of the
-     method [m] in [class_info]. If [v] is of primitive type, the function returns the empty string. *)
-  val class_of : string -> string -> t -> string
 
   (** [method_class_origin m class_info] returns the name of the class, in the class hierarchy for
       this [class_info], where the method [m] is last defined. *)
@@ -74,7 +70,7 @@ module type ClassInfoType = sig
   val vtable_index : string -> t -> int
 
   (** [return_type m class_info] gets the return type of the method [m] for this [class_info]. *)
-  val return_type : string -> t -> MJ.typ
+  val return_type : string -> t -> TMJ.typ
 
   (** [get_methods class_info] returns all the method names of the [class_info] in a list.
       A method name is prefixed by the class where the method is last defined. The list is
@@ -84,7 +80,7 @@ module type ClassInfoType = sig
   (** [get_attributes class_info] returns a list of all the attribute names of the [class_info] associated with their types.
       An attribute name is prefixed by the class where it is defined.
       The order in this list is such that the attributes for a parent class are put before the attributes of a child class.*)
-  val get_attributes : t -> (string * MJ.typ) list
+  val get_attributes : t -> (string * TMJ.typ) list
 end
 
 module ClassInfo : ClassInfoType = struct
@@ -102,7 +98,7 @@ module ClassInfo : ClassInfoType = struct
    The first element of the triple is the class origin of the attribute,
    the second element is an index used to create the field of the corresponding
    C structure in a correct order and the third element is the type of the attribute. *)
-  type attribute_info = (string * int * MJ.typ) list SM.t
+  type attribute_info = (string * int * TMJ.typ) list SM.t
 
   (** If we have the following classes
     class A {
@@ -119,8 +115,8 @@ module ClassInfo : ClassInfoType = struct
      "m3" --> ("B", 2, MJ.metho for m3)
    The first element of the triple is the class origin of the method,
    the second element is the virtual table index and
-   the third element is the [MJ.metho] type for the method. *)
-  type method_info = (string * int * MJ.metho) SM.t
+   the third element is the [TMJ.metho] type for the method. *)
+  type method_info = (string * int * TMJ.metho) SM.t
 
   type t = {
       class_name : string;
@@ -215,20 +211,6 @@ module ClassInfo : ClassInfoType = struct
       false
     with Not_found -> true
 
-  let class_of m v class_info =
-    if is_attribute m v class_info then
-      let _, _, t =
-        SM.find v class_info.attribute_info
-        |> List.hd
-      in
-      match t with
-      | Typ t -> t
-      | _ -> ""
-    else
-      match find_variable_type m v class_info with
-      | Typ t -> t
-      | _ -> ""
-
   let method_class_origin m class_info =
     let orig, _, _ = SM.find m class_info.method_info in
     orig
@@ -274,7 +256,7 @@ end
 let class_infos = Hashtbl.create 57
 
 (** [init_class_infos p] fills the [class_infos] hash table using the classes defined in [p]. *)
-let init_class_infos (p : MJ.program) : unit =
+let init_class_infos (p : TMJ.program) : unit =
   let main =
     {
       extends = None;
@@ -300,7 +282,7 @@ let get_class_info (c : string) : ClassInfo.t =
 (** [constant2c out c] transpiles the constant [c] to C on the output channel [out]. *)
 let constant2c
       out
-      (c : MJ.constant)
+      (c : TMJ.constant)
     : unit =
 
   match c with
@@ -311,7 +293,7 @@ let constant2c
 (** [binop2c out op] transpiles the binary operator [op] to C on the output channel [out]. *)
 let binop2c
       out
-      (op : MJ.binop)
+      (op : TMJ.binop)
     : unit =
   match op with
   | OpAdd -> fprintf out "+"
@@ -323,7 +305,7 @@ let binop2c
 (** [type2c out typ] transpiles the type [typ] to C on the output channel [out]. *)
 let type2c
       out
-      (typ : MJ.typ)
+      (typ : TMJ.typ)
     : unit =
   match typ with
   | TypInt -> fprintf out "int"
@@ -334,7 +316,7 @@ let type2c
 (** [cast out typ] transpiles the cast to [typ] to C on the output channel [out]. *)
 let cast
       out
-      (typ : MJ.typ)
+      (typ : TMJ.typ)
     : unit =
   fprintf out "(%a)" type2c typ
 
@@ -352,34 +334,13 @@ let var2c
     fprintf out "this->%s_%s" class_origin v
   else fprintf out "%s" v
 
-(** [get_class m class_info e] gets the class name of the the type of expression [e] in the context
-    of method [m] in [class_info]. If no class type is associated with expression [e], [get_class]
+(** [get_class typ] gets the class name of the the type [typ].
+    If no class type is associated with expression [e], [get_class]
     returns the empty string. *)
-let rec get_class
-          (method_name : string)
-          (class_info : ClassInfo.t)
-          (e : MJ.expression)
-        : string =
-  match e with
-  | EGetVar x -> ClassInfo.class_of method_name x class_info
-
-  | EMethodCall (o, m, _) ->
-     begin
-       let typ =
-         get_class method_name class_info o
-         |> get_class_info
-         |> ClassInfo.return_type m
-       in
-       match typ with
-       | Typ t -> t
-       | _ -> ""
-     end
-
-  | EThis -> ClassInfo.class_name class_info
-
-  | EObjectAlloc id -> id
-
-  | _ -> ""
+let rec get_class (typ : TMJ.typ) : string =
+  match typ with
+    | Typ t -> t
+    | _ -> ""
 
 (** [expr2c m class_info out e] transpiles the expression [e], in the context of method [m] and [class_info],
     to C on the output channel [out]. *)
@@ -387,10 +348,10 @@ let expr2c
       (method_name : string)
       (class_info : ClassInfo.t)
       out
-      (expr : MJ.expression)
+      (expr : TMJ.expression)
     : unit =
   let rec expr2c out e =
-    match e with
+    match e.raw_expression with
     | EConst const ->
        fprintf out "%a" constant2c const
 
@@ -401,7 +362,7 @@ let expr2c
        fprintf out "this"
 
     | EMethodCall (o, callee, args) ->
-       let clas = get_class method_name class_info o in
+       let clas = get_class o.typ in
        let class_info = get_class_info clas in
        let index = ClassInfo.vtable_index callee class_info in
        let typ = ClassInfo.return_type callee class_info in
@@ -475,13 +436,13 @@ let instr2c
       (method_name : string)
       (class_info : ClassInfo.t)
       out
-      (ins : MJ.instruction)
+      (ins : TMJ.instruction)
     : unit =
   let rec instr2c out ins =
     match ins with
-    | ISetVar (x, e) ->
-       let x_class = ClassInfo.class_of method_name x class_info in
-       let e_class = get_class method_name class_info e in
+    | ISetVar (x, typ, e) ->
+       let x_class = get_class typ in
+       let e_class = get_class e.typ in
        fprintf out "%a = %s%a;"
          (var2c method_name class_info) x
          (if x_class <> e_class then sprintf "(struct %s*) " x_class else "")
@@ -527,7 +488,7 @@ let class_declaration2c
 (** [decl2c out (id, t)] transpiles the declaration [(id, t)] to C on the output channel [out]. *)
 let decl2c
       out
-      ((id, t) : string * MJ.typ)
+      ((id, t) : string * TMJ.typ)
     : unit =
   fprintf out "%a %s"
     type2c t
@@ -537,11 +498,11 @@ let decl2c
     to C on the output channel [out]. *)
 let method_declaration2c
       out
-      ((class_name, clas) : string * MJ.clas)
+      ((class_name, clas) : string * TMJ.clas)
     : unit =
   let method_declaration2c
         out
-        ((method_name, m) : string * MJ.metho)
+        ((method_name, m) : string * TMJ.metho)
       : unit =
     fprintf out "void* %s_%s(struct %s* this%a);"
       class_name
@@ -557,7 +518,7 @@ let method_declaration2c
 (** [class_definition2c out (name, c)] defines the C structure representing the class [name] with type [c] on the output channel [out]. *)
 let class_definition2c
       out
-      ((class_name, clas) : string * MJ.clas)
+      ((class_name, clas) : string * TMJ.clas)
     : unit =
   let field_names =
     get_class_info class_name
@@ -565,7 +526,7 @@ let class_definition2c
   in
   let field2c
         out
-        ((name, t) : string * MJ.typ)
+        ((name, t) : string * TMJ.typ)
       : unit =
     fprintf out "%a %s"
       type2c t
@@ -580,7 +541,7 @@ let class_definition2c
     to C on the output channel [out]. *)
 let method_definition2c
       out
-      ((class_name, clas) : string * MJ.clas)
+      ((class_name, clas) : string * TMJ.clas)
     : unit =
   let class_info = get_class_info class_name in
   let method_definition out (method_name, m) =
@@ -615,8 +576,8 @@ let vtable_definition2c
     (ClassInfo.get_methods class_info)
 
 (** [all_variables p] returns the list of all the variables of program [p]. *)
-let all_variables (p : MJ.program) : string list =
-  let variables_from_method (m : MJ.metho) : string list =
+let all_variables (p : TMJ.program) : string list =
+  let variables_from_method (m : TMJ.metho) : string list =
     List.(map fst m.formals
           @ map fst m.locals)
   in
@@ -630,7 +591,7 @@ let all_variables (p : MJ.program) : string list =
             p.defs
           |> flatten)
 
-let program2c out (p : MJ.program) : unit =
+let program2c out (p : TMJ.program) : unit =
   init_class_infos p;
   let all_class_names =
     List.map fst p.defs

@@ -5,4 +5,4 @@
 exception Error of string
 
 (** [typecheck_program prog] typechecks the abstract syntax tree [prog] and raises an [Error] exception if something is wrong. *)
-val typecheck_program : LMJ.program -> unit
+val typecheck_program : LMJ.program -> TMJ.program

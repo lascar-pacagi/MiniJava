@@ -81,3 +81,5 @@ to go back to the version with a garbage collector do the following.
 git checkout master
 make
 ```
+
+The branch `typed_ast` is a version with an ast decorated with type information (useful if you want to augment `MiniJava`).

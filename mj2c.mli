@@ -2,4 +2,4 @@
 
 (** [program2c out prog] transpiles the abstract syntax tree [prog] of the MiniJava program
     to C and prints it on the [out] channel. *)
-val program2c : out_channel -> MJ.program -> unit
+val program2c : out_channel -> TMJ.program -> unit

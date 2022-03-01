@@ -3,7 +3,9 @@
 
 type identifier = string
 
-type expression =
+type expression = { raw_expression : raw_expression; typ : typ }
+
+and raw_expression =
   | EConst of constant
   | EGetVar of identifier
   | EUnOp of unop * expression
@@ -33,7 +35,7 @@ and instruction =
   | IIf of expression * instruction * instruction
   | IWhile of expression * instruction
   | ISyso of expression
-  | ISetVar of identifier * expression
+  | ISetVar of identifier * typ * expression
   | IArraySet of identifier * expression * expression
 
 and typ =
